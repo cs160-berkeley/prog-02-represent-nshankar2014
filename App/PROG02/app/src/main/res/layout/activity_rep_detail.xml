@@ -21,7 +21,7 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="200dp"
-                android:id="@+id/imageView2"
+                android:id="@+id/bigface"
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
                 android:src="@drawable/face1"
@@ -31,10 +31,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Pat Toomey (R)"
-                android:id="@+id/textView7"
+                android:id="@+id/name"
                 android:layout_marginTop="15dp"
                 android:textColor="#000000"
-                android:layout_below="@+id/imageView2"
+                android:layout_below="@+id/bigface"
                 android:layout_centerHorizontal="true"
                 android:textSize="11pt"
                 android:layout_gravity="center_horizontal" />
@@ -45,7 +45,7 @@
                 android:text="U.S. Senator"
                 android:id="@+id/textView8"
                 android:textColor="#000000"
-                android:layout_below="@+id/textView7"
+                android:layout_below="@+id/name"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="5dp"
                 android:textSize="11pt"
@@ -72,7 +72,7 @@
                 android:textColor="#000000"
                 android:layout_marginLeft="20dp"
                 android:layout_below="@+id/textView9"
-                android:layout_alignStart="@+id/imageView2" />
+                android:layout_alignStart="@+id/bigface" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -82,7 +82,7 @@
                 android:textColor="#000000"
                 android:layout_marginLeft="20dp"
                 android:layout_below="@+id/textView10"
-                android:layout_alignStart="@+id/imageView2" />
+                android:layout_alignStart="@+id/bigface" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -206,7 +206,8 @@
                 android:textIsSelectable="false"
                 android:layout_below="@+id/textView12"
                 android:layout_alignStart="@+id/textView22"
-                android:layout_marginTop="35dp" />
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -235,18 +236,6 @@
                 android:layout_below="@+id/textView25"
                 android:layout_alignParentStart="true" />
 
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="CLOSE"
-                android:id="@+id/close"
-                android:layout_alignParentBottom="true"
-                android:layout_marginBottom="25dp"
-                android:layout_centerHorizontal="true"
-                android:background="#9020c5"
-                android:textColor="#ffffff"
-                android:paddingLeft="30dp"
-                android:paddingRight="30dp" />
         </LinearLayout>
     </ScrollView>
 </RelativeLayout>

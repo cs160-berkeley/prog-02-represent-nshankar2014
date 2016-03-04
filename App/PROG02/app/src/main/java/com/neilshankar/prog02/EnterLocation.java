@@ -19,7 +19,9 @@ public class EnterLocation extends AppCompatActivity {
         use_my_location.setClickable(true);
         use_my_location.setOnClickListener(new View.OnClickListener() {
             public void onClick(View clicked) {
-                ((TextView)findViewById(R.id.zip_input)).setText("94704");
+                Intent it = new Intent(EnterLocation.this, RepList.class);
+                it.putExtra("zip", "94704");
+                EnterLocation.this.startActivity(it);
             }
         });
 
