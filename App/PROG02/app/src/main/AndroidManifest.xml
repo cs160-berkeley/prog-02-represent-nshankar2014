@@ -16,7 +16,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".EnterLocation" />
-        <activity android:name=".RepList"></activity>
+        <activity android:name=".RepList" />
+        <activity android:name=".RepDetail"></activity>
     </application>
 
 </manifest>
