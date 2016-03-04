@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="0dp"
+    android:paddingLeft="0dp"
+    android:paddingRight="0dp"
+    android:paddingTop="0dp"
+    tools:context="com.neilshankar.prog02.EnterLocation"
+    android:background="#faecec">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Who Represents You?"
+        android:id="@+id/textView2"
+        android:layout_marginTop="36dp"
+        android:textColor="#000000"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Learn about your congressional representatives."
+        android:id="@+id/textView3"
+        android:textColor="#000000"
+        android:layout_marginTop="29dp"
+        android:layout_below="@+id/textView2"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Enter your zip code"
+        android:id="@+id/textView4"
+        android:textColor="#000000"
+        android:layout_marginTop="186dp"
+        android:layout_below="@+id/textView3"
+        android:layout_centerHorizontal="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:ems="10"
+        android:id="@+id/editText"
+        android:hint="94720"
+        android:textAlignment="center"
+        android:layout_below="@+id/textView4"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Or use your location"
+        android:id="@+id/textView5"
+        android:textColor="#000000"
+        android:layout_below="@+id/editText"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="CONTINUE"
+        android:id="@+id/button"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="25dp"
+        android:layout_centerHorizontal="true"
+        android:background="#9020c5"
+        android:textColor="#ffffff"
+        android:paddingLeft="30dp"
+        android:paddingRight="30dp" />
+</RelativeLayout>

@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">PROG02</string>
+    <string name="title_activity_enter_location">EnterLocation</string>
+</resources>
