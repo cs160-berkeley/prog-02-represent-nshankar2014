@@ -104,7 +104,7 @@ public class RepList extends Activity {
             mAccelCurrent = (float) Math.sqrt((double) (x*x + y*y + z*z));
             float delta = mAccelCurrent - mAccelLast;
             mAccel = mAccel * 0.9f + delta; // perform low-cut filter
-            if (Math.abs(delta) > 20) {
+            if (mAccel > 100 && Math.abs(delta) > 20) {
 //                Intent it = new Intent(RepList.this, RepList.class);
 //                it.putExtra("zip", "10000");
 //                RepList.this.startActivity(it);
@@ -112,13 +112,6 @@ public class RepList extends Activity {
                 ((TextView)findViewById(R.id.name1)).setText("Kramer Bucks (D)");
                 ((TextView)findViewById(R.id.name2)).setText("Nancy Pack (R)");
                 ((TextView)findViewById(R.id.name3)).setText("Kyle Pillow (D)");
-                ((Button)findViewById(R.id.vote)).setOnClickListener(new View.OnClickListener() {
-                    public void onClick(View clicked) {
-                        Intent it = new Intent(RepList.this, Vote.class);
-                        it.putExtra("zip", "10000");
-                        RepList.this.startActivity(it);
-                    }
-                });
             }
         }
 
