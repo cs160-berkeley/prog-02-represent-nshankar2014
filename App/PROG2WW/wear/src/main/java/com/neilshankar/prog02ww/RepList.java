@@ -33,27 +33,52 @@ public class RepList extends Activity {
         final String zip = intent.getStringExtra("zip");
 
         if (zip.equals("94704")) {
-            ((TextView)findViewById(R.id.name1)).setText("Brad Rigo (R)");
-            ((TextView)findViewById(R.id.name2)).setText("Pat Toomey (R)");
-            ((TextView)findViewById(R.id.name3)).setText("Chad McGraw (D)");
+            ((Button)findViewById(R.id.name1)).setText("Brad Rigo (R)");
+            ((Button)findViewById(R.id.name2)).setText("Pat Toomey (R)");
+            ((Button)findViewById(R.id.name3)).setText("Chad McGraw (D)");
         } else if (zip.equals("19403")) {
-            ((TextView) findViewById(R.id.name1)).setText("Hunter Wayans (D)");
-            ((TextView) findViewById(R.id.name2)).setText("Rain Bust (R)");
-            ((TextView) findViewById(R.id.name3)).setText("Cooper Lighthook (D)");
+            ((Button) findViewById(R.id.name1)).setText("Hunter Wayans (D)");
+            ((Button) findViewById(R.id.name2)).setText("Rain Bust (R)");
+            ((Button) findViewById(R.id.name3)).setText("Cooper Lighthook (D)");
         } else {
-            ((TextView)findViewById(R.id.name1)).setText("Buster White (D)");
-            ((TextView)findViewById(R.id.name2)).setText("Nate Cream (R)");
-            ((TextView)findViewById(R.id.name3)).setText("Andrew Carmichael (D)");
+            ((Button)findViewById(R.id.name1)).setText("Buster White (D)");
+            ((Button)findViewById(R.id.name2)).setText("Nate Cream (R)");
+            ((Button)findViewById(R.id.name3)).setText("Andrew Carmichael (D)");
         }
 
         ((Button)findViewById(R.id.vote)).setOnClickListener(new View.OnClickListener() {
             public void onClick(View clicked) {
                 Intent it = new Intent(RepList.this, Vote.class);
-                it.putExtra("zip", it.getStringExtra(zip));
+                it.putExtra("zip", zip);
                 RepList.this.startActivity(it);
             }
         });
 
+        findViewById(R.id.name1).setClickable(true);
+        findViewById(R.id.name2).setClickable(true);
+        findViewById(R.id.name3).setClickable(true);
+
+        ((Button)findViewById(R.id.name1)).setOnClickListener(new View.OnClickListener() {
+            public void onClick(View clicked) {
+                Intent sendIntent = new Intent(getBaseContext(), WatchToPhoneService.class);
+                sendIntent.putExtra("face", "face1");
+                startService(sendIntent);
+            }
+        });
+        ((Button)findViewById(R.id.name1)).setOnClickListener(new View.OnClickListener() {
+            public void onClick(View clicked) {
+                Intent sendIntent2 = new Intent(getBaseContext(), WatchToPhoneService.class);
+                sendIntent2.putExtra("face", "face2");
+                startService(sendIntent2);
+            }
+        });
+        ((Button)findViewById(R.id.name1)).setOnClickListener(new View.OnClickListener() {
+            public void onClick(View clicked) {
+                Intent sendIntent3 = new Intent(getBaseContext(), WatchToPhoneService.class);
+                sendIntent3.putExtra("face", "face3");
+                startService(sendIntent3);
+            }
+        });
 
 
         mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
@@ -79,7 +104,22 @@ public class RepList extends Activity {
             mAccelCurrent = (float) Math.sqrt((double) (x*x + y*y + z*z));
             float delta = mAccelCurrent - mAccelLast;
             mAccel = mAccel * 0.9f + delta; // perform low-cut filter
-            ((TextView)findViewById(R.id.name1)).setText("" + mAccel);
+            if (Math.abs(delta) > 20) {
+//                Intent it = new Intent(RepList.this, RepList.class);
+//                it.putExtra("zip", "10000");
+//                RepList.this.startActivity(it);
+
+                ((TextView)findViewById(R.id.name1)).setText("Kramer Bucks (D)");
+                ((TextView)findViewById(R.id.name2)).setText("Nancy Pack (R)");
+                ((TextView)findViewById(R.id.name3)).setText("Kyle Pillow (D)");
+                ((Button)findViewById(R.id.vote)).setOnClickListener(new View.OnClickListener() {
+                    public void onClick(View clicked) {
+                        Intent it = new Intent(RepList.this, Vote.class);
+                        it.putExtra("zip", "10000");
+                        RepList.this.startActivity(it);
+                    }
+                });
+            }
         }
 
         public void onAccuracyChanged(Sensor sensor, int accuracy) {

@@ -17,21 +17,15 @@ public class PhoneListenerService extends WearableListenerService {
 
     @Override
     public void onMessageReceived(MessageEvent messageEvent) {
-        if( messageEvent.getPath().equalsIgnoreCase("/send_toast") ) {
 
-            // Value contains the String we sent over in WatchToPhoneService, "good job"
+        if (messageEvent.getPath().equals("/face")) {
             String value = new String(messageEvent.getData(), StandardCharsets.UTF_8);
-
-            // Make a toast with the String
-            Context context = getApplicationContext();
-            int duration = Toast.LENGTH_SHORT;
-            Toast toast = Toast.makeText(context, value, duration);
-            toast.show();
-
-            // instead of sending a toast, start a new activity
-
+            Intent intent = new Intent(this, RepDetail.class );
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.putExtra("face", value);
+            startActivity(intent); // start watch activity
         } else {
-            super.onMessageReceived( messageEvent );
+            super.onMessageReceived(messageEvent);
         }
     }
 }

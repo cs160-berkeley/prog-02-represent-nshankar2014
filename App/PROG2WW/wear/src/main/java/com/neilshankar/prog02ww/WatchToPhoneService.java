@@ -27,6 +27,7 @@ public class WatchToPhoneService extends Service implements GoogleApiClient.Conn
 
     private GoogleApiClient mWatchApiClient;
     private List<Node> nodes = new ArrayList<>();
+    private String face;
 
     @Override
     public void onCreate() {
@@ -48,6 +49,8 @@ public class WatchToPhoneService extends Service implements GoogleApiClient.Conn
 
     @Override
     public IBinder onBind(Intent intent) {
+        Bundle extras = intent.getExtras();
+        face = extras.getString("face");
         return null;
     }
 
@@ -57,7 +60,7 @@ public class WatchToPhoneService extends Service implements GoogleApiClient.Conn
                     @Override
                     public void onResult(NodeApi.GetConnectedNodesResult getConnectedNodesResult) {
                 nodes = getConnectedNodesResult.getNodes();
-                sendMessage("/send_toast", "Good job!");
+                sendMessage("/face", face);
             }
         });
     }
