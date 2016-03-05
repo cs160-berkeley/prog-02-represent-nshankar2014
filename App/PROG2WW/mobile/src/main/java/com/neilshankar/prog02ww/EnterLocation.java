@@ -24,7 +24,7 @@ public class EnterLocation extends AppCompatActivity {
                 EnterLocation.this.startActivity(it);
 
                 Intent sendIntent = new Intent(getBaseContext(), PhoneToWatchService.class);
-                sendIntent.putExtra("CAT_NAME", "Fred");
+                sendIntent.putExtra("zip", "94704");
                 startService(sendIntent);
             }
         });

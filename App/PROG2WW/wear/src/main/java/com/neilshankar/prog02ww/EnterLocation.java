@@ -24,18 +24,10 @@ public class EnterLocation extends Activity {
         Bundle extras = intent.getExtras();
 
         if (extras != null) {
-            String catName = extras.getString("CAT_NAME");
-            mFeedBtn.setText("Feed " + catName);
+            String zip = extras.getString("zip");
+            mFeedBtn.setText(zip);
         } else {
             mFeedBtn.setText("extras == null");
         }
-
-        mFeedBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent sendIntent = new Intent(getBaseContext(), WatchToPhoneService.class);
-                startService(sendIntent);
-            }
-        });
     }
 }
