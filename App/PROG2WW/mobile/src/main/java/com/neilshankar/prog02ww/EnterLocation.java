@@ -36,6 +36,10 @@ public class EnterLocation extends AppCompatActivity {
                 Intent it = new Intent(EnterLocation.this, RepList.class);
                 it.putExtra("zip", "" + ((EditText) findViewById(R.id.zip_input)).getText());
                 EnterLocation.this.startActivity(it);
+
+                Intent sendIntent = new Intent(getBaseContext(), PhoneToWatchService.class);
+                sendIntent.putExtra("zip", "" + ((EditText) findViewById(R.id.zip_input)).getText());
+                startService(sendIntent);
             }
         });
     }
