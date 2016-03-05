@@ -30,10 +30,8 @@ public class PhoneListenerService extends WearableListenerService {
 
             // instead of sending a toast, start a new activity
 
-
         } else {
             super.onMessageReceived( messageEvent );
         }
-
     }
 }

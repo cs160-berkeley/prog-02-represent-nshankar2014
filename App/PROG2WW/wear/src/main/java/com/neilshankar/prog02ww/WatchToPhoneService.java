@@ -23,9 +23,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-/**
- * Created by joleary and noon on 2/19/16 at very late in the night. (early in the morning?)
- */
 public class WatchToPhoneService extends Service implements GoogleApiClient.ConnectionCallbacks {
 
     private GoogleApiClient mWatchApiClient;
@@ -56,19 +53,13 @@ public class WatchToPhoneService extends Service implements GoogleApiClient.Conn
 
     @Override //alternate method to connecting: no longer create this in a new thread, but as a callback
     public void onConnected(Bundle bundle) {
-        Log.d("T", "in onconnected");
-        Wearable.NodeApi.getConnectedNodes(mWatchApiClient)
-                .setResultCallback(new ResultCallback<NodeApi.GetConnectedNodesResult>() {
+        Wearable.NodeApi.getConnectedNodes(mWatchApiClient).setResultCallback(new ResultCallback<NodeApi.GetConnectedNodesResult>() {
                     @Override
                     public void onResult(NodeApi.GetConnectedNodesResult getConnectedNodesResult) {
-                        nodes = getConnectedNodesResult.getNodes();
-                        Log.d("T", "found nodes");
-                        //when we find a connected node, we populate the list declared above
-                        //finally, we can send a message
-                        sendMessage("/send_toast", "Good job!");
-                        Log.d("T", "sent");
-                    }
-                });
+                nodes = getConnectedNodesResult.getNodes();
+                sendMessage("/send_toast", "Good job!");
+            }
+        });
     }
 
     @Override //we need this to implement GoogleApiClient.ConnectionsCallback

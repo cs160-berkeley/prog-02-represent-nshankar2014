@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-public class MainActivity extends Activity {
+public class EnterLocation extends Activity {
 
     private TextView mTextView;
     private Button mFeedBtn;
@@ -16,7 +16,7 @@ public class MainActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_enter_location);
 
         mFeedBtn = (Button) findViewById(R.id.feed_btn);
 
@@ -26,6 +26,8 @@ public class MainActivity extends Activity {
         if (extras != null) {
             String catName = extras.getString("CAT_NAME");
             mFeedBtn.setText("Feed " + catName);
+        } else {
+            mFeedBtn.setText("extras == null");
         }
 
         mFeedBtn.setOnClickListener(new View.OnClickListener() {

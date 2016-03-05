@@ -42,7 +42,7 @@ public class PhoneToWatchService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         Bundle extras = intent.getExtras();
-        final String catName = extras.getString("CAT_NAME");
+        final String catName = "Fred";
 
         // Send the message with the cat name
         new Thread(new Runnable() {
@@ -67,6 +67,7 @@ public class PhoneToWatchService extends Service {
         new Thread( new Runnable() {
             @Override
             public void run() {
+                Log.d("T", "sent message: " + text);
                 NodeApi.GetConnectedNodesResult nodes = Wearable.NodeApi.getConnectedNodes( mApiClient ).await();
                 for(Node node : nodes.getNodes()) {
                     MessageApi.SendMessageResult result = Wearable.MessageApi.sendMessage(
