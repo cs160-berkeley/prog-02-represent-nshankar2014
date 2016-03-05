@@ -28,10 +28,10 @@ public class Vote extends WearableActivity {
         Intent intent = getIntent();
         final String zip = intent.getStringExtra("zip");
 
-        if (zip == "94704") {
+        if (zip.equals("94704")) {
             ((TextView)findViewById(R.id.obama)).setText("Obama: 30%");
             ((TextView)findViewById(R.id.romney)).setText("Romney: 70%");
-        } else if (zip == "19403") {
+        } else if (zip.equals("19403")) {
             ((TextView)findViewById(R.id.obama)).setText("Obama: 40%");
             ((TextView)findViewById(R.id.romney)).setText("Romney: 60%");
         } else {
