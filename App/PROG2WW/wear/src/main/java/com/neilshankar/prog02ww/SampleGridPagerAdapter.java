@@ -1,18 +1,4 @@
-/*
- * Copyright (C) 2014 The Android Open Source Project
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
+// shoutout to http://bit.ly/1RVK3Fx
 
 package com.neilshankar.prog02ww;
 
@@ -34,21 +20,12 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Constructs fragments as requested by the GridViewPager. For each row a different background is
- * provided.
- * <p>
- * Always avoid loading resources from the main thread. In this sample, the background images are
- * loaded from an background task and then updated using {@link #notifyRowBackgroundChanged(int)}
- * and {@link #notifyPageBackgroundChanged(int, int)}.
- */
 public class SampleGridPagerAdapter extends FragmentGridPagerAdapter {
     private static final int TRANSITION_DURATION_MILLIS = 100;
 
     private final Context mContext;
     private List<Row> mRows;
     private ColorDrawable mDefaultBg;
-
     private ColorDrawable mClearBg;
 
     public SampleGridPagerAdapter(Context ctx, FragmentManager fm) {
@@ -67,8 +44,9 @@ public class SampleGridPagerAdapter extends FragmentGridPagerAdapter {
                 cardFragment(R.string.columns_title, R.string.columns_text)));
         mRows.add(new Row(new CustomFragment()));
         mRows.add(new Row(cardFragment(R.string.dismiss_title, R.string.dismiss_text)));
-        mDefaultBg = new ColorDrawable(R.color.dark_grey);
-        mClearBg = new ColorDrawable(android.R.color.transparent);
+
+//        mDefaultBg = new ColorDrawable(R.color.dark_grey);
+//        mClearBg = new ColorDrawable(android.R.color.transparent);
     }
 
     LruCache<Integer, Drawable> mRowBackgrounds = new LruCache<Integer, Drawable>(3) {
@@ -118,9 +96,7 @@ public class SampleGridPagerAdapter extends FragmentGridPagerAdapter {
         Resources res = mContext.getResources();
         CardFragment fragment =
                 CardFragment.create(res.getText(titleRes), res.getText(textRes));
-        // Add some extra bottom margin to leave room for the page indicator
-        fragment.setCardMarginBottom(
-                res.getDimensionPixelSize(R.dimen.card_margin_bottom));
+        fragment.setCardMarginBottom(10); // leave room for page indicator
         return fragment;
     }
 

@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">PROG2WW</string>
-    <string name="hello_world">Hello World!</string>
+    <string name="google_app_id">460437569641</string>
+
     <string name="title_activity_splash">Splash</string>
     <string name="title_activity_vote">Vote</string>
     <string name="title_activity_main">MainActivity</string>
