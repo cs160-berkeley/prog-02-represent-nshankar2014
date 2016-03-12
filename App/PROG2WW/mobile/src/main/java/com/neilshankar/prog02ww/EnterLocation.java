@@ -16,6 +16,13 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.wearable.Wearable;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+
 public class EnterLocation extends AppCompatActivity
         implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
@@ -37,14 +44,24 @@ public class EnterLocation extends AppCompatActivity
         use_my_location.setClickable(true);
         use_my_location.setOnClickListener(new View.OnClickListener() {
             public void onClick(View clicked) {
+
+                // get location
                 if (getApplicationContext().checkCallingOrSelfPermission("android.permission.ACCESS_FINE_LOCATION") == PackageManager.PERMISSION_GRANTED) {
                     Location mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
                     if (mLastLocation != null) {
-                        String x = "0"+mLastLocation.getLatitude();
+                        String x = ""+mLastLocation.getLatitude();
                         ((EditText) findViewById(R.id.zip_input)).setText(x);
-                        Log.d("0000000000000000", "mLastLocation lat: " + mLastLocation.getLatitude());
                     }
+
+                    try {
+                        Log.d("0000000000000000", "http get results " + getInternetData());
+                    } catch (Exception e) {
+                        Log.d("0000000000000000", "http get results: exception");
+                    }
+
+
                 } else {
+                    // fine location permission disabled... force 94704
                     Intent it = new Intent(EnterLocation.this, RepList.class);
                     it.putExtra("zip", "94704");
                     EnterLocation.this.startActivity(it);
@@ -70,6 +87,47 @@ public class EnterLocation extends AppCompatActivity
                 startService(sendIntent);
             }
         });
+    }
+
+    public String getInternetData() throws Exception {
+
+        URL url = new URL("http://congress.api.sunlightfoundation.com/legislators/locate?zip=94704&apikey=d5c6792487144ad397965ccbe5cb713d");
+        HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+        BufferedReader in = null;
+        String data = "";
+
+        try {
+            // InputStream in = new BufferedInputStream(urlConnection.getInputStream());
+            // readStream(in);
+
+            in = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
+            StringBuffer sb = new StringBuffer("");
+            String l = "";
+            String nl = System.getProperty("line.separator");
+            while ((l = in.readLine()) != null) {
+                sb.append(l + nl);
+            }
+            in.close();
+            urlConnection.disconnect();
+            data = sb.toString();
+            Log.d("0000000000000000", "data: " + data);
+            return data;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "";
+        } finally {
+//            urlConnection.disconnect();
+//            if (in != null) {
+//                try {
+//                    in.close();
+//                    return data;
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                }
+//            } else {
+//                Log.d("0000000000000000", "in == null");
+//            }
+        }
     }
 
 
