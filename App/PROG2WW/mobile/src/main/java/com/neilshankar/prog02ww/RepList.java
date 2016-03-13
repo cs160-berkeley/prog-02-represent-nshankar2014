@@ -1,5 +1,6 @@
 package com.neilshankar.prog02ww;
 
+import android.app.ListActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
@@ -10,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -23,6 +25,8 @@ import com.twitter.sdk.android.core.models.Tweet;
 import com.twitter.sdk.android.core.TwitterException;
 import com.twitter.sdk.android.tweetui.TweetUtils;
 import com.twitter.sdk.android.tweetui.TweetView;
+import com.twitter.sdk.android.tweetui.TweetTimelineListAdapter;
+import com.twitter.sdk.android.tweetui.UserTimeline;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -169,7 +173,6 @@ public class RepList extends AppCompatActivity {
             conn.setRequestMethod("GET");
             conn.setDoInput(true);
             conn.connect();
-            // Log.d("0000000000000000", "The response is: " + conn.getResponseCode());
 
             // read in the HTTP response
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
@@ -267,9 +270,6 @@ public class RepList extends AppCompatActivity {
 //            ((ImageButton)findViewById(R.id.img0)).setImageResource(R.drawable.face1);
 //            ((ImageButton)findViewById(R.id.img1)).setImageResource(R.drawable.face2);
 //            ((ImageButton)findViewById(R.id.img2)).setImageResource(R.drawable.face3);
-//            ((LinearLayout)findViewById(R.id.card0)).setTag("face1");
-//            ((LinearLayout)findViewById(R.id.card1)).setTag("face2");
-//            ((LinearLayout)findViewById(R.id.card2)).setTag("face3");
 //        }
     }
 
@@ -302,7 +302,37 @@ public class RepList extends AppCompatActivity {
 //                // Toast.makeText(...).show();
 //            }
 //        });
+
+        final UserTimeline userTimeline = new UserTimeline.Builder()
+                .screenName("senatorboxer")
+                .maxItemsPerRequest(1)
+                .build();
+
+//        final TweetTimelineListAdapter adapter = new TweetTimelineListAdapter.Builder(this)
+//                .setTimeline(userTimeline)
+//                .build();
+        //setListAdapter(adapter);
+
+        // TODO: Use a more specific parent
+        final ViewGroup parentView = (ViewGroup)findViewById(R.id.tweetwrapper0);
+
+        long tweetId = 631879971628183552L;
+        TweetUtils.loadTweet(tweetId, new Callback<Tweet>() {
+            @Override
+            public void success(Result<Tweet> result) {
+                TweetView tweetView = new TweetView(RepList.this, result.data);
+                parentView.addView(tweetView);
+            }
+            @Override
+            public void failure(TwitterException exception) {
+                Log.d("TwitterKit", "Load Tweet failure", exception);
+            }
+        });
+
+
     }
+
+
 
 
 }

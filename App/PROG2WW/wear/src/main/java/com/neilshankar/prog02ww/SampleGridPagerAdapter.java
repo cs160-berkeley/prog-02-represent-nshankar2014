@@ -146,7 +146,6 @@ public class SampleGridPagerAdapter extends FragmentGridPagerAdapter {
 
     // update vote view
     public void newVote(String countystate, int obama, int romney) {
-        mRows.remove(3);
         mRows.set(3, new Row(
                 cardFragment("2012 Vote", countystate),
                 cardFragment("Barack Obama (D)", "" + obama + "%"),
