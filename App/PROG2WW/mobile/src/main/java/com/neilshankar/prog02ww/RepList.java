@@ -2,6 +2,7 @@ package com.neilshankar.prog02ww;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
@@ -18,8 +19,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.Reader;
-import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
@@ -35,13 +34,12 @@ public class RepList extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rep_list);
 
+        ((TextView)findViewById(R.id.maintext)).setTypeface(Typeface.createFromAsset(getAssets(), "fonts/didot.ttf"));
+
         it = getIntent();
         zip = it.getStringExtra("zip");
         lat = it.getStringExtra("lat");
         lon = it.getStringExtra("lon");
-        Log.d("0000000000000000", "zip: " + zip);
-        Log.d("0000000000000000", "lat: " + lat);
-        Log.d("0000000000000000", "lon: " + lon);
 
         attachClickListeners();
         fetchData();
@@ -49,46 +47,26 @@ public class RepList extends AppCompatActivity {
 
     // attach a click listener to each ImageButton and Button
     private void attachClickListeners() {
-        LinearLayout full = (LinearLayout) findViewById(R.id.full);
-        for (int i = 0; i < full.getChildCount(); i += 1) {
-            View v = full.getChildAt(i);
-            if (v instanceof LinearLayout) {
-                LinearLayout card = (LinearLayout) v;
-                final String tag = "" + card.getTag();
-                for (int j = 0; j < card.getChildCount(); j += 1) {
-                    View a = card.getChildAt(j);
-                    if (a instanceof ImageButton) {
-                        final ImageButton ib = (ImageButton) a;
-                        ib.setClickable(true);
-                        ib.setOnClickListener(new View.OnClickListener() {
-                            public void onClick(View clicked) {
-                                Intent it = new Intent(RepList.this, RepDetail.class);
-                                it.putExtra("face", tag);
-                                it.putExtra("zip", it.getStringExtra("zip"));
-                                RepList.this.startActivity(it);
-                            }
-                        });
-                    } else if (a instanceof LinearLayout) {
-                        LinearLayout inner = (LinearLayout) a;
-                        for (int x = 0; x < inner.getChildCount(); x += 1) {
-                            View cat = inner.getChildAt(x);
-                            if (cat instanceof Button) {
-                                final Button b = (Button) cat;
-                                b.setClickable(true);
-                                b.setOnClickListener(new View.OnClickListener() {
-                                    public void onClick(View clicked) {
-                                        Intent it = new Intent(RepList.this, RepDetail.class);
-                                        it.putExtra("face", tag);
-                                        it.putExtra("zip", it.getStringExtra("zip"));
-                                        RepList.this.startActivity(it);
-                                    }
-                                });
-                            }
-                        }
-                    }
-                }
+        ImageButton img0 = (ImageButton)findViewById(R.id.img0);
+        img0.setClickable(true);
+        img0.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View clicked) {
+                Intent it = new Intent(RepList.this, RepDetail.class);
+                it.putExtra("face", "face1");
+                it.putExtra("zip", it.getStringExtra("zip"));
+                RepList.this.startActivity(it);
             }
-        }
+        });
+        Button seemore0 = (Button)findViewById(R.id.seemore0);
+        seemore0.setClickable(true);
+        seemore0.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View clicked) {
+                Intent it = new Intent(RepList.this, RepDetail.class);
+                it.putExtra("face", "face1");
+                it.putExtra("zip", it.getStringExtra("zip"));
+                RepList.this.startActivity(it);
+            }
+        });
     }
 
     // construct HTTP GET query with either (zip) or (lat and lon)
@@ -187,12 +165,14 @@ public class RepList extends AppCompatActivity {
         int i_title = -1;
         int i_email = -1;
         int i_website = -1;
+        int i_termend = -1;
         String[] fname = new String[3];
         String[] surname = new String[3];
         String[] party = new String[3];
         String[] title = new String[3];
         String[] email = new String[3];
         String[] website = new String[3];
+        String[] termend = new String[3];
 
         for (int i = 0; i < 3; i += 1) {
             i_fname = s.indexOf("\"first_name\":", i_fname + 1);
@@ -201,6 +181,7 @@ public class RepList extends AppCompatActivity {
             i_title = s.indexOf("\"title\":", i_title + 1);
             i_email = s.indexOf("\"oc_email\":", i_email + 1);
             i_website = s.indexOf("\"website\":", i_website + 1);
+            i_termend = s.indexOf("\"term_end\":", i_termend + 1);
 
             fname[i] = stripQuotes(s.substring(i_fname + 13, s.indexOf(",", i_fname)));
             surname[i] = stripQuotes(s.substring(i_surname + 12, s.indexOf(",", i_surname)));
@@ -208,6 +189,7 @@ public class RepList extends AppCompatActivity {
             title[i] = stripQuotes(s.substring(i_title + 8, s.indexOf(",", i_title)));
             email[i] = stripQuotes(s.substring(i_email + 11, s.indexOf(",", i_email)));
             website[i] = stripQuotes(s.substring(i_website + 10, s.indexOf(",", i_website)));
+            termend[i] = stripQuotes(s.substring(i_termend + 11, s.indexOf(",", i_termend)));
 
             if (title[i].equals("Rep")) {
                 title[i] = "House of Representatives";

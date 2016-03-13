@@ -8,7 +8,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.neilshankar.prog02ww.RepList"
-    android:background="#faecec">
+    android:background="#e6e6e6">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -24,7 +24,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Your Representatives"
-                android:id="@+id/textView6"
+                android:id="@+id/maintext"
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
                 android:textColor="#000000"
@@ -36,7 +36,7 @@
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/textView6"
+                android:layout_below="@+id/maintext"
                 android:layout_alignParentStart="true"
                 android:layout_marginTop="20dp"
                 android:background="#ffffff">
@@ -62,27 +62,42 @@
                         android:id="@+id/name0"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text=""
-                        android:layout_marginTop="20dp"
-                        android:textSize="11pt" />
+                        android:text="sample"
+                        android:layout_marginTop="10dp"
+                        android:textSize="11pt"
+                        android:textColor="#000000"
+                        android:layout_marginLeft="20dp" />
 
                     <TextView
                         android:id="@+id/title0"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="" />
+                        android:text="sample"
+                        android:textSize="11pt"
+                        android:textColor="#000000"
+                        android:layout_marginLeft="20dp" />
 
                     <TextView
                         android:id="@+id/email0"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="" />
+                        android:text="sample"
+                        android:linksClickable="true"
+                        android:autoLink="email"
+                        android:textSize="8pt"
+                        android:textColor="#000000"
+                        android:layout_marginLeft="20dp" />
 
                     <TextView
                         android:id="@+id/website0"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="" />
+                        android:text="sample"
+                        android:linksClickable="true"
+                        android:autoLink="web"
+                        android:textSize="8pt"
+                        android:textColor="#000000"
+                        android:layout_marginLeft="20dp" />
 
                     <TextView
                         android:id="@+id/tweet0"
@@ -92,10 +107,12 @@
 
                     <Button
                         android:id="@+id/seemore0"
-                        android:layout_width="wrap_content"
+                        android:layout_width="100dp"
                         android:layout_height="wrap_content"
                         android:text="SEE MORE"
-                        android:layout_gravity="center_horizontal" />
+                        android:layout_gravity="center_horizontal"
+                        android:background="#9020c5"
+                        android:textColor="#ffffff" />
 
                 </LinearLayout>
             </LinearLayout>
@@ -134,7 +151,7 @@
                         android:layout_height="wrap_content"
                         android:text=""
                         android:layout_marginTop="20dp"
-                        android:textSize="11pt"/>
+                        android:textSize="11pt" />
 
                     <TextView
                         android:id="@+id/title1"
@@ -146,13 +163,17 @@
                         android:id="@+id/email1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="" />
+                        android:text=""
+                        android:linksClickable="true"
+                        android:autoLink="email"/>
 
                     <TextView
                         android:id="@+id/website1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="" />
+                        android:text=""
+                        android:linksClickable="true"
+                        android:autoLink="web"/>
 
                     <TextView
                         android:id="@+id/tweet1"
@@ -162,10 +183,12 @@
 
                     <Button
                         android:id="@+id/seemore1"
-                        android:layout_width="wrap_content"
+                        android:layout_width="100dp"
                         android:layout_height="wrap_content"
                         android:text="SEE MORE"
-                        android:layout_gravity="center_horizontal" />
+                        android:layout_gravity="center_horizontal"
+                        android:background="#9020c5"
+                        android:textColor="#ffffff"/>
 
                 </LinearLayout>
             </LinearLayout>
@@ -216,13 +239,17 @@
                         android:id="@+id/email2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="" />
+                        android:text=""
+                        android:linksClickable="true"
+                        android:autoLink="email"/>
 
                     <TextView
                         android:id="@+id/website2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="" />
+                        android:text=""
+                        android:linksClickable="true"
+                        android:autoLink="web" />
 
                     <TextView
                         android:id="@+id/tweet2"
@@ -232,10 +259,12 @@
 
                     <Button
                         android:id="@+id/seemore2"
-                        android:layout_width="wrap_content"
+                        android:layout_width="100dp"
                         android:layout_height="wrap_content"
                         android:text="SEE MORE"
-                        android:layout_gravity="center_horizontal" />
+                        android:layout_gravity="center_horizontal"
+                        android:background="#9020c5"
+                        android:textColor="#ffffff" />
 
                 </LinearLayout>
             </LinearLayout>
