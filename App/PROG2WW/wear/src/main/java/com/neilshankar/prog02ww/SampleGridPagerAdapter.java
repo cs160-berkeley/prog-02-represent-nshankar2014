@@ -41,15 +41,18 @@ public class SampleGridPagerAdapter extends FragmentGridPagerAdapter {
 
         mRows.add(new Row(
                 cardFragment(name0, title0),
-                cardFragment("click", "click")
+                customFragment()
         ));
         mRows.add(new Row(
                 cardFragment(name1, title1),
-                cardFragment("click", "click")
+                customFragment()
         ));
         mRows.add(new Row(
                 cardFragment(name2, title2),
-                cardFragment("click", "click")
+                customFragment()
+        ));
+        mRows.add(new Row(
+                voteFragment()
         ));
     }
 
@@ -99,16 +102,28 @@ public class SampleGridPagerAdapter extends FragmentGridPagerAdapter {
     private Fragment cardFragment(String title, String text) {
         CardFragment fragment = CardFragment.create(title, text);
         fragment.setCardMarginBottom(10); // leave room for page indicator
+        fragment.setExpansionEnabled(true);
+        fragment.setExpansionDirection(CardFragment.EXPAND_UP);
+        //fragment.setContentPaddingLeft(10);
         return fragment;
     }
 
-    private Fragment cardFragment(int titleRes, int textRes) {
-        Resources res = mContext.getResources();
-        CardFragment fragment =
-                CardFragment.create(res.getText(titleRes), res.getText(textRes));
-        fragment.setCardMarginBottom(10); // leave room for page indicator
-        return fragment;
+    private Fragment customFragment() {
+        return new CustomFragment();
     }
+
+    private Fragment voteFragment() {
+        return new VoteFragment();
+    }
+
+
+//    private Fragment cardFragment(int titleRes, int textRes) {
+//        Resources res = mContext.getResources();
+//        CardFragment fragment =
+//                CardFragment.create(res.getText(titleRes), res.getText(textRes));
+//        fragment.setCardMarginBottom(10); // leave room for page indicator
+//        return fragment;
+//    }
 
     static final int[] BG_IMAGES = new int[] {
             R.drawable.face1,

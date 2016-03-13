@@ -29,4 +29,5 @@ public class CustomFragment extends Fragment {
                              Bundle savedInstanceState) {
         return inflater.inflate(R.layout.custom_fragment, container, false);
     }
+
 }
