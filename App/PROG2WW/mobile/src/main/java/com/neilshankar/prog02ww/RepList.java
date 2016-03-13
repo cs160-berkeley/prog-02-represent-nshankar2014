@@ -39,6 +39,7 @@ public class RepList extends AppCompatActivity {
     private String zip;
     private String lat;
     private String lon;
+    private String geojson;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,6 +98,7 @@ public class RepList extends AppCompatActivity {
                 getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
         if (networkInfo != null && networkInfo.isConnected()) {
+            new DownloadWebpageTask2().execute("https://maps.googleapis.com/maps/api/geocode/json?latlng=40.714224,-73.961452&key=AIzaSyCb7REm9Yhi2lusfMLNxU3CP-c-Ori8jnk");
             new DownloadWebpageTask().execute(stringUrl); // this is the magic line that makes the request happen
         } else {
             Log.d("0000000000000000", "network contectivity issues");
@@ -125,6 +127,26 @@ public class RepList extends AppCompatActivity {
             fillLayout(result);
         }
     }
+
+    // for reverse geolocating
+    private class DownloadWebpageTask2 extends AsyncTask<String, Void, String> {
+        @Override
+        protected String doInBackground(String... urls) {
+            // params comes from the execute() call: params[0] is the url.
+            try {
+                return downloadUrl(urls[0]);
+            } catch (IOException e) {
+                return "Unable to retrieve web page. URL may be invalid.";
+            }
+        }
+
+        // onPostExecute calls fillLayout(), which fills the UI with the json info
+        @Override
+        protected void onPostExecute(String result) {
+            geojson = result;
+        }
+    }
+
 
     // shoutout to http://bit.ly/1XlKtX1
     // Given a URL, establishes an HttpUrlConnection and retrieves
@@ -232,6 +254,7 @@ public class RepList extends AppCompatActivity {
         sendIntent.putExtra("title0", title[0]);
         sendIntent.putExtra("title1", title[1]);
         sendIntent.putExtra("title2", title[2]);
+        sendIntent.putExtra("geojson", geojson);
         startService(sendIntent);
 
 //        if (zip.equals("94704")) {
@@ -248,7 +271,10 @@ public class RepList extends AppCompatActivity {
     private String stripQuotes(String s) {
         if (s.substring(0,1).equals("\"") && s.substring(s.length()-1, s.length()).equals("\"")) {
             return s.substring(1, s.length()-1);
-        } else {
+        } else if (s.substring(0,1).equals("\"") && s.substring(s.length()-1, s.length()).equals("}")) {
+            return s.substring(1, s.length()-2);
+        }
+        else {
             return s;
         }
     }

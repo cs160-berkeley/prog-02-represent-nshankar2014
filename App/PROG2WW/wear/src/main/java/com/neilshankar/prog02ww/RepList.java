@@ -109,9 +109,9 @@ public class RepList extends Activity {
 //                it.putExtra("zip", "10000");
 //                RepList.this.startActivity(it);
 
-                ((TextView)findViewById(R.id.name1)).setText("Kramer Bucks (D)");
-                ((TextView)findViewById(R.id.name2)).setText("Nancy Pack (R)");
-                ((TextView)findViewById(R.id.name3)).setText("Kyle Pillow (D)");
+//                ((TextView)findViewById(R.id.name1)).setText("Kramer Bucks (D)");
+//                ((TextView)findViewById(R.id.name2)).setText("Nancy Pack (R)");
+//                ((TextView)findViewById(R.id.name3)).setText("Kyle Pillow (D)");
             }
         }
 

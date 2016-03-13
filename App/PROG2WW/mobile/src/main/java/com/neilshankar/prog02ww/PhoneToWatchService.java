@@ -50,7 +50,8 @@ public class PhoneToWatchService extends Service {
                 mApiClient.connect();
                 String data = it.getStringExtra("name0") + "|" + it.getStringExtra("name1") + "|" +
                         it.getStringExtra("name2") + "|" + it.getStringExtra("title0") +
-                        "|" + it.getStringExtra("title1") + "|" + it.getStringExtra("title2");
+                        "|" + it.getStringExtra("title1") + "|" + it.getStringExtra("title2") +
+                        "|" + it.getStringExtra("geojson");
                 sendMessage("/data", data);
 
             }
