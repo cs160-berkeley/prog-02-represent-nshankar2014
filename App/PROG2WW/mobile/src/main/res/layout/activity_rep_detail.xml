@@ -48,7 +48,7 @@
                 android:layout_below="@+id/name"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="2dp"
-                android:textSize="11pt"
+                android:textSize="9pt"
                 android:layout_gravity="center_horizontal" />
 
             <TextView

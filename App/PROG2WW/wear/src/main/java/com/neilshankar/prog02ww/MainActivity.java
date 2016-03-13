@@ -23,6 +23,7 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.wearable.Wearable;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.InputStream;
@@ -33,7 +34,12 @@ public class MainActivity extends Activity {
     private float mAccel; // acceleration apart from gravity
     private float mAccelCurrent; // current acceleration including gravity
     private float mAccelLast; // last acceleration including gravity
-
+    private int numCounties;
+    private JSONObject votejson;
+    private String countystate;
+    private int obama;
+    private int romney;
+    private SampleGridPagerAdapter sgpa;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,19 +64,14 @@ public class MainActivity extends Activity {
         String title2 = it.getStringExtra("title2");
         String geojson = it.getStringExtra("geojson");
 
-        SampleGridPagerAdapter sgpa = new SampleGridPagerAdapter(this, getFragmentManager());
-        sgpa.fill(name0, name1, name2, title0, title1, title2);
+        vote(geojson);
+
+        sgpa = new SampleGridPagerAdapter(this, getFragmentManager());
+        sgpa.fill(name0, name1, name2, title0, title1, title2, countystate, obama, romney);
         pager.setAdapter(sgpa);
 
         DotsPageIndicator dotsPageIndicator = (DotsPageIndicator) findViewById(R.id.page_indicator);
         dotsPageIndicator.setPager(pager);
-
-        vote(geojson);
-        Log.d("0000000000000000", "geojson: " + geojson);
-
-
-
-
 
         mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         mSensorManager.registerListener(mSensorListener, mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_NORMAL);
@@ -81,31 +82,47 @@ public class MainActivity extends Activity {
 
     // read in vote json file
     private void vote(String geojson) {
-
-        // administrative_area_level_2
-//        int i_admin = geojson.indexOf("\"administrative_area_level_2\":", 0);
-//        int i_shortname = geojson.indexOf("\"short_name\":", 0);
-
+        countystate = "";
 
         try {
+            // retrieve county and state from geojson
             JSONObject jo = new JSONObject(geojson);
-            String fo = jo.getString("results");
-            Log.d("0000000000000000", "results: " + fo);
-            Log.d("0000000000000000", "ac: " + new JSONObject(fo).getString("address_components"));
+            JSONArray results = jo.getJSONArray("results");
+            JSONObject firstDict = results.getJSONObject(0);
+            JSONArray addrComp = firstDict.getJSONArray("address_components");
+            for (int i = 0; i < addrComp.length(); i += 1) {
+                JSONObject inner = addrComp.getJSONObject(i);
+                String longname = inner.getString("long_name");
+                String shortname = inner.getString("short_name");
+                JSONArray types = inner.getJSONArray("types");
+                if (types.get(0).equals("administrative_area_level_2")) {
+                    Log.d("0000000000000000", "county: " + longname);
+                    countystate += longname + ", ";
+                } else if (types.get(0).equals("administrative_area_level_1")) {
+                    Log.d("0000000000000000", "state: " + shortname);
+                    countystate += shortname;
+                    Log.d("0000000000000000", "countystate: " + countystate);
+                }
+            }
 
-//            InputStream stream = getAssets().open("vote.json");
-//            int size = stream.available();
-//            byte[] buffer = new byte[size];
-//            stream.read(buffer);
-//            stream.close();
-//            String jsonString = new String(buffer, "UTF-8");
+            // lookup obama romney stats from vote.json
+            InputStream stream = getAssets().open("vote.json");
+            int size = stream.available();
+            byte[] buffer = new byte[size];
+            stream.read(buffer);
+            stream.close();
+            String jsonString = new String(buffer, "UTF-8");
 
-
-            // String url = "https://maps.googleapis.com/maps/api/geocode/json?latlng=40.714224,-73.961452&key=AIzaSyCb7REm9Yhi2lusfMLNxU3CP-c-Ori8jnk";
+            votejson = new JSONObject(jsonString);
+            numCounties = votejson.length();
+            JSONObject or = votejson.getJSONObject(countystate);
+            romney = or.getInt("romney");
+            obama = or.getInt("obama");
+            Log.d("0000000000000000", "obama: " + obama);
+            Log.d("0000000000000000", "romney: " + romney);
 
         } catch (Exception e) {
             e.printStackTrace();
-            Log.d("0000000000000000", "can't convert geojson to json object");
         }
     }
 
@@ -120,14 +137,23 @@ public class MainActivity extends Activity {
             float delta = mAccelCurrent - mAccelLast;
             mAccel = mAccel * 0.9f + delta; // perform low-cut filter
             if (mAccel > 100 && Math.abs(delta) > 20) {
-//                int rand = (int)(100 * Math.random());
-//                int rand2 = 100-rand;
-                if ((TextView)findViewById(R.id.obama) != null) {
-                    ((TextView)findViewById(R.id.obama)).setText("60%");
-                    ((TextView)findViewById(R.id.romney)).setText("40%");
-                } else {
-                    Log.d("0000000000000000", "obama romney null");
+
+                // choose random county
+                JSONArray counties = votejson.names();
+                int rand = (int)(counties.length() * Math.random());
+                String randCounty = "Berkeley County, WV";
+                romney = 0;
+                obama = 0;
+                try {
+                    randCounty = counties.getString(rand);
+                    JSONObject or = votejson.getJSONObject(randCounty);
+                    romney = or.getInt("romney");
+                    obama = or.getInt("obama");
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
+
+                sgpa.newVote(randCounty, obama, romney);
 
             }
         }

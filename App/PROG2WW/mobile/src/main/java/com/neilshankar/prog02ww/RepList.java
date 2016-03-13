@@ -83,26 +83,32 @@ public class RepList extends AppCompatActivity {
     }
 
     // construct HTTP GET query with either (zip) or (lat and lon)
+    // also construct geolocate url for vote data
     private void fetchData() {
-        String stringUrl = "http://congress.api.sunlightfoundation.com/legislators/locate?";
+        String repUrl = "http://congress.api.sunlightfoundation.com/legislators/locate?";
+        String voteUrl = "https://maps.googleapis.com/maps/api/geocode/json?";
         if (zip.equals("")) {
-            stringUrl += "latitude=" + lat + "&longitude=" + lon;
+            repUrl += "latitude=" + lat + "&longitude=" + lon;
+            voteUrl += "latlng=" + lat + "," + lon;
         } else {
-            stringUrl += "zip=" + zip;
+            repUrl += "zip=" + zip;
+            voteUrl += "latlng=37.8687,-122.25";
         }
-        stringUrl += "&apikey=d5c6792487144ad397965ccbe5cb713d";
-        Log.d("0000000000000000", "stringUrl: " + stringUrl);
+        repUrl += "&apikey=d5c6792487144ad397965ccbe5cb713d";
+        voteUrl += "&key=AIzaSyCb7REm9Yhi2lusfMLNxU3CP-c-Ori8jnk";
 
         // make the GET request
         ConnectivityManager connMgr = (ConnectivityManager)
                 getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
         if (networkInfo != null && networkInfo.isConnected()) {
-            new DownloadWebpageTask2().execute("https://maps.googleapis.com/maps/api/geocode/json?latlng=40.714224,-73.961452&key=AIzaSyCb7REm9Yhi2lusfMLNxU3CP-c-Ori8jnk");
-            new DownloadWebpageTask().execute(stringUrl); // this is the magic line that makes the request happen
+            new GetVoteData().execute(voteUrl);
+            new GetRepData().execute(repUrl); // this is the magic line that makes the request happen
         } else {
             Log.d("0000000000000000", "network contectivity issues");
         }
+
+        // sample vote url: "https://maps.googleapis.com/maps/api/geocode/json?latlng=40.714224,-73.961452&key=AIzaSyCb7REm9Yhi2lusfMLNxU3CP-c-Ori8jnk";
     }
 
     // shoutout to http://bit.ly/1XlKtX1
@@ -110,7 +116,7 @@ public class RepList extends AppCompatActivity {
     // URL string and uses it to create an HttpUrlConnection. Once the connection
     // has been established, the AsyncTask downloads the contents of the webpage as
     // an InputStream. Finally, the InputStream is converted into a string.
-    private class DownloadWebpageTask extends AsyncTask<String, Void, String> {
+    private class GetRepData extends AsyncTask<String, Void, String> {
         @Override
         protected String doInBackground(String... urls) {
             // params comes from the execute() call: params[0] is the url.
@@ -129,7 +135,7 @@ public class RepList extends AppCompatActivity {
     }
 
     // for reverse geolocating
-    private class DownloadWebpageTask2 extends AsyncTask<String, Void, String> {
+    private class GetVoteData extends AsyncTask<String, Void, String> {
         @Override
         protected String doInBackground(String... urls) {
             // params comes from the execute() call: params[0] is the url.

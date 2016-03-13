@@ -24,7 +24,7 @@ public class SampleGridPagerAdapter extends FragmentGridPagerAdapter {
     private static final int TRANSITION_DURATION_MILLIS = 100;
 
     private final Context mContext;
-    private List<Row> mRows;
+    public List<Row> mRows;
     private ColorDrawable mDefaultBg = new ColorDrawable(0);
     private ColorDrawable mClearBg = new ColorDrawable(0);
 
@@ -36,8 +36,8 @@ public class SampleGridPagerAdapter extends FragmentGridPagerAdapter {
     }
 
     // fill layout w rep info
-    public void fill(String name0, String name1,
-                         String name2, String title0, String title1, String title2) {
+    public void fill(String name0, String name1, String name2, String title0, String title1,
+                     String title2, String countystate, int obama, int romney) {
 
         mRows.add(new Row(
                 cardFragment(name0, title0),
@@ -52,7 +52,9 @@ public class SampleGridPagerAdapter extends FragmentGridPagerAdapter {
                 customFragment()
         ));
         mRows.add(new Row(
-                voteFragment()
+                cardFragment("2012 Vote", countystate),
+                cardFragment("Barack Obama (D)", "" + obama + "%"),
+                cardFragment("Mitt Romney (R)", "" + romney + "%")
         ));
     }
 
@@ -104,26 +106,12 @@ public class SampleGridPagerAdapter extends FragmentGridPagerAdapter {
         fragment.setCardMarginBottom(10); // leave room for page indicator
         fragment.setExpansionEnabled(true);
         fragment.setExpansionDirection(CardFragment.EXPAND_UP);
-        //fragment.setContentPaddingLeft(10);
         return fragment;
     }
 
     private Fragment customFragment() {
         return new CustomFragment();
     }
-
-    private Fragment voteFragment() {
-        return new VoteFragment();
-    }
-
-
-//    private Fragment cardFragment(int titleRes, int textRes) {
-//        Resources res = mContext.getResources();
-//        CardFragment fragment =
-//                CardFragment.create(res.getText(titleRes), res.getText(textRes));
-//        fragment.setCardMarginBottom(10); // leave room for page indicator
-//        return fragment;
-//    }
 
     static final int[] BG_IMAGES = new int[] {
             R.drawable.face1,
@@ -155,6 +143,17 @@ public class SampleGridPagerAdapter extends FragmentGridPagerAdapter {
             return columns.size();
         }
     }
+
+    // update vote view
+    public void newVote(String countystate, int obama, int romney) {
+        mRows.remove(3);
+        mRows.set(3, new Row(
+                cardFragment("2012 Vote", countystate),
+                cardFragment("Barack Obama (D)", "" + obama + "%"),
+                cardFragment("Mitt Romney (R)", "" + romney + "%")
+        ));
+    }
+
 
     @Override
     public Fragment getFragment(int row, int col) {
