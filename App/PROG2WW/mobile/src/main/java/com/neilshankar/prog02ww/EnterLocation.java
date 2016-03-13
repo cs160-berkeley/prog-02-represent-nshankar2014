@@ -79,7 +79,7 @@ public class EnterLocation extends AppCompatActivity
                 }
 
                 EnterLocation.this.startActivity(it);
-                startService(sendIntent);
+                //startService(sendIntent);
             }
         });
     }
@@ -103,7 +103,7 @@ public class EnterLocation extends AppCompatActivity
                 sendIntent.putExtra("lat", "");
                 sendIntent.putExtra("lon", "");
                 EnterLocation.this.startActivity(it);
-                startService(sendIntent);
+                //startService(sendIntent);
             }
         });
     }

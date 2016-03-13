@@ -41,15 +41,18 @@ public class PhoneToWatchService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        Bundle extras = intent.getExtras();
-        final String tag = extras.getString("zip");
+        final Intent it = intent;
 
         // Send the message with the cat name
         new Thread(new Runnable() {
             @Override
             public void run() {
                 mApiClient.connect();
-                sendMessage("/zip", tag);
+                String data = it.getStringExtra("name0") + "|" + it.getStringExtra("name1") + "|" +
+                        it.getStringExtra("name2") + "|" + it.getStringExtra("title0") +
+                        "|" + it.getStringExtra("title1") + "|" + it.getStringExtra("title2");
+                sendMessage("/data", data);
+
             }
         }).start();
 

@@ -25,28 +25,32 @@ public class SampleGridPagerAdapter extends FragmentGridPagerAdapter {
 
     private final Context mContext;
     private List<Row> mRows;
-    private ColorDrawable mDefaultBg;
-    private ColorDrawable mClearBg;
+    private ColorDrawable mDefaultBg = new ColorDrawable(0);
+    private ColorDrawable mClearBg = new ColorDrawable(0);
 
     public SampleGridPagerAdapter(Context ctx, FragmentManager fm) {
         super(fm);
         mContext = ctx;
 
         mRows = new ArrayList<SampleGridPagerAdapter.Row>();
+    }
 
-        mRows.add(new Row(cardFragment(R.string.welcome_title, R.string.welcome_text)));
-        mRows.add(new Row(cardFragment(R.string.about_title, R.string.about_text)));
-        mRows.add(new Row(
-                cardFragment(R.string.cards_title, R.string.cards_text),
-                cardFragment(R.string.expansion_title, R.string.expansion_text)));
-        mRows.add(new Row(
-                cardFragment(R.string.backgrounds_title, R.string.backgrounds_text),
-                cardFragment(R.string.columns_title, R.string.columns_text)));
-        mRows.add(new Row(new CustomFragment()));
-        mRows.add(new Row(cardFragment(R.string.dismiss_title, R.string.dismiss_text)));
+    // fill layout w rep info
+    public void fill(String name0, String name1,
+                         String name2, String title0, String title1, String title2) {
 
-//        mDefaultBg = new ColorDrawable(R.color.dark_grey);
-//        mClearBg = new ColorDrawable(android.R.color.transparent);
+        mRows.add(new Row(
+                cardFragment(name0, title0),
+                cardFragment("click", "click")
+        ));
+        mRows.add(new Row(
+                cardFragment(name1, title1),
+                cardFragment("click", "click")
+        ));
+        mRows.add(new Row(
+                cardFragment(name2, title2),
+                cardFragment("click", "click")
+        ));
     }
 
     LruCache<Integer, Drawable> mRowBackgrounds = new LruCache<Integer, Drawable>(3) {
@@ -73,7 +77,7 @@ public class SampleGridPagerAdapter extends FragmentGridPagerAdapter {
         @Override
         protected Drawable create(final Point page) {
             // place bugdroid as the background at row 2, column 1
-            if (page.y == 2 && page.x == 1) {
+            if (page.y == 1 && page.x == 1) {
                 int resid = R.drawable.face1;
                 new DrawableLoadingTask(mContext) {
                     @Override
@@ -92,6 +96,12 @@ public class SampleGridPagerAdapter extends FragmentGridPagerAdapter {
         }
     };
 
+    private Fragment cardFragment(String title, String text) {
+        CardFragment fragment = CardFragment.create(title, text);
+        fragment.setCardMarginBottom(10); // leave room for page indicator
+        return fragment;
+    }
+
     private Fragment cardFragment(int titleRes, int textRes) {
         Resources res = mContext.getResources();
         CardFragment fragment =
@@ -102,10 +112,10 @@ public class SampleGridPagerAdapter extends FragmentGridPagerAdapter {
 
     static final int[] BG_IMAGES = new int[] {
             R.drawable.face1,
+            R.drawable.face1,
             R.drawable.face2,
-            R.drawable.face3,
-            R.drawable.face4,
-            R.drawable.face5
+            R.drawable.face1,
+            R.drawable.face1
     };
 
     /** A convenient container for a row of fragments. */

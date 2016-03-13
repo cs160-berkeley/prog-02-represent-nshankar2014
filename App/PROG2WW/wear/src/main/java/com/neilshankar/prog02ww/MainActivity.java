@@ -3,6 +3,7 @@
 package com.neilshankar.prog02ww;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.wearable.view.DotsPageIndicator;
 import android.support.wearable.view.GridViewPager;
@@ -22,6 +23,7 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         final GridViewPager pager = (GridViewPager) findViewById(R.id.pager);
         pager.setOnApplyWindowInsetsListener(new OnApplyWindowInsetsListener() {
             @Override
@@ -30,8 +32,19 @@ public class MainActivity extends Activity {
                 return insets;
             }
         });
+
+        Intent it = getIntent();
+        String name0 = it.getStringExtra("name0");
+        String name1 = it.getStringExtra("name1");
+        String name2 = it.getStringExtra("name2");
+        String title0 = it.getStringExtra("title0");
+        String title1 = it.getStringExtra("title1");
+        String title2 = it.getStringExtra("title2");
+
         SampleGridPagerAdapter sgpa = new SampleGridPagerAdapter(this, getFragmentManager());
+        sgpa.fill(name0, name1, name2, title0, title1, title2);
         pager.setAdapter(sgpa);
+
         DotsPageIndicator dotsPageIndicator = (DotsPageIndicator) findViewById(R.id.page_indicator);
         dotsPageIndicator.setPager(pager);
     }

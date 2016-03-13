@@ -11,9 +11,18 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.twitter.sdk.android.core.Result;
+import com.twitter.sdk.android.tweetui.TweetUtils;
+import com.twitter.sdk.android.core.Callback;
+import com.twitter.sdk.android.core.models.Tweet;
+import com.twitter.sdk.android.core.TwitterException;
+import com.twitter.sdk.android.tweetui.TweetUtils;
+import com.twitter.sdk.android.tweetui.TweetView;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -21,6 +30,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Arrays;
+import java.util.List;
 
 public class RepList extends AppCompatActivity {
 
@@ -43,6 +54,7 @@ public class RepList extends AppCompatActivity {
 
         attachClickListeners();
         fetchData();
+        twitterConnect();
     }
 
     // attach a click listener to each ImageButton and Button
@@ -189,7 +201,7 @@ public class RepList extends AppCompatActivity {
             title[i] = stripQuotes(s.substring(i_title + 8, s.indexOf(",", i_title)));
             email[i] = stripQuotes(s.substring(i_email + 11, s.indexOf(",", i_email)));
             website[i] = stripQuotes(s.substring(i_website + 10, s.indexOf(",", i_website)));
-            termend[i] = stripQuotes(s.substring(i_termend + 11, s.indexOf(",", i_termend)));
+            //termend[i] = stripQuotes(s.substring(i_termend + 11, s.indexOf(",", i_termend)));
 
             if (title[i].equals("Rep")) {
                 title[i] = "House of Representatives";
@@ -212,6 +224,15 @@ public class RepList extends AppCompatActivity {
         ((TextView)findViewById(R.id.website1)).setText("Website: " + website[1]);
         ((TextView)findViewById(R.id.website2)).setText("Website: " + website[2]);
 
+        // send data to watch
+        Intent sendIntent = new Intent(getBaseContext(), PhoneToWatchService.class);
+        sendIntent.putExtra("name0", fname[0] + " " + surname[0] + " (" + party[0] + ")");
+        sendIntent.putExtra("name1", fname[1] + " " + surname[1] + " (" + party[1] + ")");
+        sendIntent.putExtra("name2", fname[2] + " " + surname[2] + " (" + party[2] + ")");
+        sendIntent.putExtra("title0", title[0]);
+        sendIntent.putExtra("title1", title[1]);
+        sendIntent.putExtra("title2", title[2]);
+        startService(sendIntent);
 
 //        if (zip.equals("94704")) {
 //            ((ImageButton)findViewById(R.id.img0)).setImageResource(R.drawable.face1);
@@ -230,6 +251,25 @@ public class RepList extends AppCompatActivity {
         } else {
             return s;
         }
+    }
+
+    private void twitterConnect() {
+//        final LinearLayout myLayout = (LinearLayout) findViewById(R.id.linlay0);
+//
+//        final List<Long> tweetIds = Arrays.asList(510908133917487104L);
+//        TweetUtils.loadTweets(tweetIds, new Callback<Tweet>() {
+//            @Override
+//            public void success(Result<Tweet> result) {
+//                for (Tweet tweet : result.data) {
+//                    myLayout.addView(new TweetView(RepList.this, tweet));
+//                }
+//            }
+//
+//            @Override
+//            public void failure(TwitterException exception) {
+//                // Toast.makeText(...).show();
+//            }
+//        });
     }
 
 
