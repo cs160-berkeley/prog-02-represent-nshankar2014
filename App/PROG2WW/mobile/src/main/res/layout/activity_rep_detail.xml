@@ -52,7 +52,7 @@
                 android:layout_gravity="center_horizontal" />
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="About"
                 android:id="@+id/textView9"
@@ -62,7 +62,9 @@
                 android:textIsSelectable="false"
                 android:layout_below="@+id/textView8"
                 android:layout_alignParentStart="true"
-                android:layout_marginTop="10dp" />
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="20dp"
+                android:autoText="false" />
 
             <TextView
                 android:layout_width="wrap_content"

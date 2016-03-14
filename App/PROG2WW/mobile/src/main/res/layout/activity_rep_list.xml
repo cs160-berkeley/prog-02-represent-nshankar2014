@@ -200,11 +200,20 @@
                         android:layout_marginLeft="20dp"
                         android:textColorLink="#9020c5"/>
 
-                    <TextView
-                        android:id="@+id/tweet1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="" />
+                    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                        android:id="@+id/tweetwrapper1"
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <ListView android:id="@+id/tweet1"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:divider="#e1e8ed"
+                            android:dividerHeight="1dp"
+                            android:drawSelectorOnTop="false"/>
+                    </LinearLayout>
 
                     <Button
                         android:id="@+id/seemore1"
@@ -290,11 +299,20 @@
                         android:layout_marginLeft="20dp"
                         android:textColorLink="#9020c5" />
 
-                    <TextView
-                        android:id="@+id/tweet2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="" />
+                    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                        android:id="@+id/tweetwrapper2"
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <ListView android:id="@+id/tweet2"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:divider="#e1e8ed"
+                            android:dividerHeight="1dp"
+                            android:drawSelectorOnTop="false"/>
+                    </LinearLayout>
 
                     <Button
                         android:id="@+id/seemore2"

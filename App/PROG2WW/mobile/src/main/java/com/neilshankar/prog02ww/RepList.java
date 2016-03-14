@@ -1,5 +1,7 @@
 package com.neilshankar.prog02ww;
 
+import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.app.ListActivity;
 import android.content.Context;
 import android.content.Intent;
@@ -14,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -303,31 +306,64 @@ public class RepList extends AppCompatActivity {
 //            }
 //        });
 
-        final UserTimeline userTimeline = new UserTimeline.Builder()
-                .screenName("senatorboxer")
-                .maxItemsPerRequest(1)
-                .build();
-
-//        final TweetTimelineListAdapter adapter = new TweetTimelineListAdapter.Builder(this)
-//                .setTimeline(userTimeline)
+//        final UserTimeline userTimeline = new UserTimeline.Builder()
+//                .screenName("senatorboxer")
+//                .maxItemsPerRequest(1)
 //                .build();
-        //setListAdapter(adapter);
+//
 
-        // TODO: Use a more specific parent
-        final ViewGroup parentView = (ViewGroup)findViewById(R.id.tweetwrapper0);
+        // load 3 tweets (hardcoded)
+        final ViewGroup tweet0w = (ViewGroup)findViewById(R.id.tweetwrapper0);
+        final ViewGroup tweet1w = (ViewGroup)findViewById(R.id.tweetwrapper1);
+        final ViewGroup tweet2w = (ViewGroup)findViewById(R.id.tweetwrapper2);
 
-        long tweetId = 631879971628183552L;
-        TweetUtils.loadTweet(tweetId, new Callback<Tweet>() {
+        long tweet0 = 708420496245678080L;
+        long tweet1 = 707328209700913152L;
+        long tweet2 = 708793207757398016L;
+
+        TweetUtils.loadTweet(tweet0, new Callback<Tweet>() {
             @Override
             public void success(Result<Tweet> result) {
                 TweetView tweetView = new TweetView(RepList.this, result.data);
-                parentView.addView(tweetView);
+                tweet0w.addView(tweetView);
             }
             @Override
             public void failure(TwitterException exception) {
                 Log.d("TwitterKit", "Load Tweet failure", exception);
             }
         });
+        TweetUtils.loadTweet(tweet1, new Callback<Tweet>() {
+            @Override
+            public void success(Result<Tweet> result) {
+                TweetView tweetView = new TweetView(RepList.this, result.data);
+                tweet1w.addView(tweetView);
+            }
+            @Override
+            public void failure(TwitterException exception) {
+                Log.d("TwitterKit", "Load Tweet failure", exception);
+            }
+        });
+        TweetUtils.loadTweet(tweet2, new Callback<Tweet>() {
+            @Override
+            public void success(Result<Tweet> result) {
+                TweetView tweetView = new TweetView(RepList.this, result.data);
+                tweet2w.addView(tweetView);
+            }
+            @Override
+            public void failure(TwitterException exception) {
+                Log.d("TwitterKit", "Load Tweet failure", exception);
+            }
+        });
+
+//        TweetFragment t = new TweetFragment();
+//        FrameLayout frame = new FrameLayout(this);
+//        frame.setId(R.id.tweetwrapper0);
+//        setContentView(frame, new LinearLayout.LayoutParams(
+//                LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
+//
+//        Fragment newFragment = new TweetFragment();
+//        FragmentTransaction ft = getFragmentManager().beginTransaction();
+//        ft.add(R.id.tweetwrapper0, newFragment).commit();
 
 
     }

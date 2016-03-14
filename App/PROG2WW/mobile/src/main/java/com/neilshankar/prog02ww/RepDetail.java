@@ -21,7 +21,7 @@ public class RepDetail extends AppCompatActivity {
 
         if (face.equals("face1")) {
             ((ImageView)findViewById(R.id.bigface)).setImageResource(R.drawable.face1);
-            ((TextView)findViewById(R.id.name)).setText("Brad Rigo (R)");
+            ((TextView)findViewById(R.id.name)).setText("Barbara Lee (D)");
         } else if (face.equals("face2")) {
             ((ImageView)findViewById(R.id.bigface)).setImageResource(R.drawable.face2);
             ((TextView)findViewById(R.id.name)).setText("Pat Toomey (R)");

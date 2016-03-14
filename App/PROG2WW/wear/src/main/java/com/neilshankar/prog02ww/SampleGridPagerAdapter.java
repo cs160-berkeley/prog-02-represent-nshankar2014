@@ -114,11 +114,15 @@ public class SampleGridPagerAdapter extends FragmentGridPagerAdapter {
     }
 
     static final int[] BG_IMAGES = new int[] {
-            R.drawable.face1,
-            R.drawable.face1,
-            R.drawable.face1,
-            R.drawable.face1,
-            R.drawable.face1
+            R.drawable.whitehouse,
+            R.drawable.whitehouse,
+            R.drawable.whitehouse,
+            R.drawable.whitehouse,
+            R.drawable.whitehouse,
+            R.drawable.whitehouse,
+            R.drawable.whitehouse,
+            R.drawable.whitehouse,
+
     };
 
     /** A convenient container for a row of fragments. */
